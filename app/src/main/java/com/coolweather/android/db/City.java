@@ -3,14 +3,15 @@ package com.coolweather.android.db;
 import org.litepal.crud.DataSupport;
 
 /**
- * Created by Administrator on 2018/9/16.
+ * Created by Administrator on 2018/9/16
+ * 用来存放市的数据
  */
 
 public class City extends DataSupport {
     private int id;
     private String cityName;
-    private int cityCode;
-    private int provinceId;
+    private int cityCode;//市的代号
+    private int provinceId;//当前城市所属省的id值
 
     public int getId() {
         return id;

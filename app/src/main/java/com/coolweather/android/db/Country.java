@@ -4,13 +4,14 @@ import org.litepal.crud.DataSupport;
 
 /**
  * Created by Administrator on 2018/9/16.
+ * 记录县城 的数据
  */
 
 public class Country extends DataSupport {
     private int id;
-    private String countryName;
-    private String weatherId;
-    private int cityId;
+    private String countryName;//县的名字
+    private String weatherId;//记录县所对应天气的id
+    private int cityId;//当前县城所属城市的id
 
     public int getId() {
         return id;

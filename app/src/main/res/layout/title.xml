@@ -11,6 +11,7 @@
         android:layout_marginLeft="10dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"/>
+    <!-- 居中显示城市名称　-->　
 <TextView
     android:id="@+id/title_city"
     android:layout_width="wrap_content"

@@ -1,4 +1,7 @@
+<!--  指定数据库名称 版本 3个实体类添加到映射中
+ assets文件夹下存放原生资源文件,放在这个文件夹下面的文件不会被R文件编译-->
 <litepal>
+
     <dbname value="cool_weather" />
     <version value="1" />
     <list>

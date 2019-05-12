@@ -36,12 +36,10 @@ import okhttp3.Response;
 
 //用于遍历省市县数据的碎片　
 public class ChooseAreaFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final int LEVEL_PROVINCE = 0;
     private static final int LEVEL_CITY = 1;
     private static final int LEVEL_COUNTRY = 2;
-    // TODO: Rename and change types of parameters
     private ProgressDialog progressDialog;
     private TextView titleText;
     private Button backButton;
@@ -51,8 +49,8 @@ public class ChooseAreaFragment extends Fragment {
 
     //省列表
     private List<Province> provinceList;
-    private List<City> cityList;
-    private List<Country> countryList;
+    private List<City> cityList;//市列表
+    private List<Country> countryList;//县列表
 
     //选择的省份
     private Province selectedProvince;
@@ -64,23 +62,6 @@ public class ChooseAreaFragment extends Fragment {
     public ChooseAreaFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-
-     * @return A new instance of fragment ChooseAreaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-/*    public static ChooseAreaFragment newInstance(String param1, String param2) {
-        ChooseAreaFragment fragment = new ChooseAreaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,10 +75,14 @@ public class ChooseAreaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // 将布局文件layout里的.xml文件找出来，并将其实例化为view对象
+        //一个参数就是要加载的布局文件，第二个参数是给加载好的布局（第一个参数）再添加一个父布局，
+        // 第三个参数指定成false，表示只让在父布局中声明的layout属性生效，但不会为这个View添加父布局
         View view = inflater.inflate(R.layout.choose_area,container,false);
         titleText = view.findViewById(R.id.title_text);
         backButton = view.findViewById(R.id.back_button);
+        //系统提供好的适配器　android.layout.simple_list_item_1是系统定义好的布局文件只显示一行文字，
+        // 在实际中也可以自建一个listview
         adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,dataList);
         listView.setAdapter(adapter);//设置为listview 的适配器
         return view;
@@ -142,7 +127,7 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
-        queryProvinces();
+        queryProvinces();//这里开始加载省级数据　
     }
 
     /**
@@ -159,7 +144,7 @@ public class ChooseAreaFragment extends Fragment {
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
             currentLevel = LEVEL_PROVINCE;
-        }else{
+        }else{//从服务器查询数据　
             String address = "http://guolin.tech/api/china";
             queryFromServer(address,"province");
         }
@@ -218,6 +203,7 @@ public class ChooseAreaFragment extends Fragment {
         showProgressDialog();
         HttpUtil.sendOkHttpRequest(address, new Callback() {
             @Override
+            //响应的数据回调到这里　
             public void onResponse(okhttp3.Call call, Response response) throws IOException {
                 String responseText = response.body().string();
                 boolean result = false;
@@ -234,7 +220,7 @@ public class ChooseAreaFragment extends Fragment {
                         public void run() {
                             closeProgressDialog();
                             if ("province".equals(type)) {
-                                queryProvinces();
+                                queryProvinces();//重新加载省级数据　
                             } else if ("city".equals(type)) {
                                 queryCities();
                             } else if ("country".equals(type)) {
