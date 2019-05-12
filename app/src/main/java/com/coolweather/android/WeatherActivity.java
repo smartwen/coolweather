@@ -45,9 +45,9 @@ private TextView comfortText;
 private TextView carWashText;
 private  TextView sportText;
 private ImageView bingPicImg;
-public SwipeRefreshLayout swipeRefresh;
+public SwipeRefreshLayout swipeRefresh;//手动更新天气作用的　
 public DrawerLayout drawerLayout;
-private Button navButton;
+private Button navButton;//切换城市的按钮　
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +61,7 @@ private Button navButton;
         }
         setContentView(R.layout.activity_weather);
         initwidget();
-        swipeRefresh.setColorSchemeColors(R.color.colorPrimary);
+        swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather",null);
         final String weatherId;
@@ -89,7 +89,7 @@ private Button navButton;
         navButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START);//打开滑动菜单　
             }
         });
     }
@@ -166,7 +166,7 @@ private Button navButton;
             }
         });
     }
-//处理并展示处理并展示Weather实体类的数据
+//处理并展示Weather实体类的数据
   private void showWeatherInfo(Weather weather) {
         String cityName = weather.basic.cityName;
         String updateTime = weather.basic.update.updateTime.split(" ")[1];
@@ -194,7 +194,7 @@ private Button navButton;
             aqiText.setText(weather.aqi.city.aqi);
             pm25Text.setText(weather.aqi.city.pm25);
         }
-        String comfort ="舒适度"+weather.suggestion.comfort.info;
+      String comfort ="舒适度"+weather.suggestion.comfort.info;
       String carWash ="洗车指数"+weather.suggestion.carWash.info;
       String sport ="运动建议"+weather.suggestion.sport.info;
       comfortText.setText(comfort);

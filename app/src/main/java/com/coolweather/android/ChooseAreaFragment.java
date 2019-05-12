@@ -88,6 +88,17 @@ public class ChooseAreaFragment extends Fragment {
         return view;
     }
 
+    /**
+     *  parent：官方解释为：The AdapterView where the click happened，也就是用户所点击的AdapterView，
+     * 这个参数一般不用。
+
+       view：当前点击的列表项所对应的布局View对象，可通过这个参数获得相应的列表项内部的组件，
+     进而对其进行操作。举个例子，假设有一个ListView，含有4个列表项，你点了第2个，
+     那么通过view你就可以操作第2个列表项里面的TextView、ImageView等等的组件（假设存在）。
+
+       position：当前点击的列表项的位置，从0开始，也就是点击第n个，position就是n-1。
+
+       id：当前点击的列表项的序号，也是从0开始，一般情况下position和id是一样的。*/
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -109,7 +120,7 @@ public class ChooseAreaFragment extends Fragment {
                         getActivity().finish();
                     }else if (getActivity() instanceof WeatherActivity){
                         WeatherActivity activity = (WeatherActivity) getActivity();
-                        activity.drawerLayout.closeDrawers();
+                        activity.drawerLayout.closeDrawers();////没有参数,关闭所有的出现的抽屉
                         activity.swipeRefresh.setRefreshing(true);
                         activity.requestWeather(weatherId);
                     }
@@ -135,6 +146,7 @@ public class ChooseAreaFragment extends Fragment {
      */
     private void queryProvinces(){
         titleText.setText("中国");
+        backButton.setVisibility(View.GONE);
         provinceList = DataSupport.findAll(Province.class);
         if (provinceList.size() > 0){
             dataList.clear();
